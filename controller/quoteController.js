@@ -27,7 +27,10 @@ const getQuotes = asyncHandler(async (req, res) => {
 //@access private
 const getQuotesById = asyncHandler(async (req, res) => {
     const randomId = Math.round(Math.random() * 100);
-    const quote = await Quote.findOne({ id: randomId ? randomId : 45 });
+    if (randomId === 0) {
+        randomId = 45;
+    }
+    const quote = await Quote.findOne({ id: randomId });
     if (!quote) {
         res.status(404);
         throw new Error("Quote not found");
